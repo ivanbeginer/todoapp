@@ -1,0 +1,20 @@
+{% extends 'allauth/layouts/base.html' %}
+
+{% block content %}
+
+{% if object_list %}
+<h3> All my lists</h3>
+<ul>
+  {% for todo_list in object_list %}
+  <li>
+      <div role="button" onclick="location.href='{% url "list" todo_list.id %}'"> {{ todo_list.title }} </div>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<h3>you have no lists</h3>
+{% endif %}
+<p>
+    <input value="Add a new list " type="button" onclick="location.href='{%url "list-add" %}'"/>
+</p>
+{% endblock %}

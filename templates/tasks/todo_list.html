@@ -1,0 +1,33 @@
+        {% extends 'allauth/layouts/base.html' %}
+        {% block content %}
+<div>
+    <div>
+        <h3>Edit list:</h3>
+        <h5>{{ todo_list | upper }}</h5>
+    </div>
+    <ul>
+        {% for todo in object_list %}
+        <li>
+            <div role="button" onclick="location.href='{% url "item-update" todo_list.id todo.id %}'">
+                {{ todo.title }}
+                {% if todo.due_date %}
+                (Due {{ todo.due_date | date }})
+                {% endif %}
+            </div>
+        </li>
+        {% empty %}
+        <h5>you have no tasks in this list</h5>
+        {% endfor %}
+    </ul>
+    <p>
+        <input value="Add a new task " type="button" onclick="location.href='{% url "item-add" todo_list.id %}'"/>
+    </p>
+    <p>
+        <input value="Delete this  list " type="button" onclick="location.href='{% url "list-delete" todo_list.id %}'"/>
+    </p>
+        <p>
+        <input value="To lists" type="button" onclick="location.href='{% url "index" %}'"/>
+    </p>
+</div>
+
+{% endblock %}
