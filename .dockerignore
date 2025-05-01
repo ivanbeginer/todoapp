@@ -1,0 +1,10 @@
+*
+!ToDoApp
+!users
+!api
+!tasks
+!templates
+!pyproject.toml
+!poetry.lock
+!manage.py
+!README.md
