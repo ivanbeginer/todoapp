@@ -1,0 +1,14 @@
+stages:
+  - build
+
+build-docker-compose:
+  tags:
+    - ivan-shell
+    - shell
+  script:
+    - docker compose build
+  stage: build
+  only:
+    - master
+    - merge_requests
+
