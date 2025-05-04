@@ -1,0 +1,34 @@
+
+networks:
+  backend:
+
+services:
+  postgres:
+    image: postgres:17
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: django
+      POSTGRES_PASSWORD: django
+      POSTGRES_DB: django
+
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data/
+    networks:
+      - backend
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DEPS: prod
+    ports:
+      - "8000:8000"
+    environment:
+      DEBUG: "true"
+      DATABASE_USER: django
+      DATABASE_PASSWORD: django
+      DATABASE_BD: django
+      DATABASE_HOST: postgres
+    networks:
+      - backend

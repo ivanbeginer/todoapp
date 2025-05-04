@@ -14,18 +14,24 @@ RUN curl -sSl https://install.python-poetry.org | python3 -
 ENV PATH="$PATH:$POETRY_HOME/bin"
 
 
-RUN poetry config virtualenvs.create false
-WORKDIR /app
-COPY pyproject.toml poetry.lock ./
+RUN poetry config virtualenvs.create false \
+    && poetry config cache-dir /cache/poetry
 
-RUN poetry install --only main --no-root
+WORKDIR /app
+COPY pyproject.toml poetry.lock README.md ./
+
+RUN --mount=type=cache,target=/cache/poetry \
+    poetry install --only main --no-root
 
 
 FROM base-prod AS base-dev
 
-RUN poetry install --only dev --no-root
+RUN poetry install --only dev
 
 
 FROM base-${DEPS} AS final
 COPY . .
 RUN poetry install --no-root
+
+CMD ["bash","-c"]
+CMD ["./docker-entrypoint.sh"]

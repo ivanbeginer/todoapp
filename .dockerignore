@@ -8,3 +8,5 @@
 !poetry.lock
 !manage.py
 !README.md
+!docker-entrypoint.sh
+!db.sqlite3
