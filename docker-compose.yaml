@@ -17,6 +17,7 @@ services:
     networks:
       - backend
   app:
+    image: ${BUILD_TAG}
     build:
       context: .
       dockerfile: Dockerfile
