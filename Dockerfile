@@ -21,7 +21,7 @@ WORKDIR /app
 COPY pyproject.toml poetry.lock README.md ./
 
 RUN --mount=type=cache,target=/cache/poetry \
-    poetry install --only main --no-root
+    poetry install --only main
 
 
 FROM base-prod AS base-dev
@@ -31,7 +31,7 @@ RUN poetry install --only dev
 
 FROM base-${DEPS} AS final
 COPY . .
-RUN poetry install --no-root
+RUN poetry install
 
 CMD ["bash","-c"]
 CMD ["./docker-entrypoint.sh"]
